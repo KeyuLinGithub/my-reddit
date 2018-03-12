@@ -33,8 +33,10 @@ class Search extends Component {
   handleSubmit(event) {
     console.log('new search: ' + this.state.item+", "+this.state.sortBy);
     console.log(this.goSearch());
+    store.dispatch({type: "ChangeLoadingStatus",loadingStatus: true});
     this.goSearch()
-    .then(results => {store.dispatch({type: "update",arr: results})});
+    .then(results => {store.dispatch({type: "update",arr: results});
+                      store.dispatch({type: "ChangeLoadingStatus",loadingStatus: false});});
     event.preventDefault();
   }
 

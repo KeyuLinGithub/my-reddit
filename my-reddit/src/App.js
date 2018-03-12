@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Search from './components/Search';
+import Grid from './components/Grid';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
@@ -9,64 +10,21 @@ const bdiv=styled.div`
 
 `;
 
-
-
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.updateContents=this.updateContents.bind(this);
-    this.cutText=this.cutText.bind(this);
-    this.getImgSrc=this.getImgSrc.bind(this);
-  }
-  componentDidMount(){
 
-  }
-  updateContents(){
-    var arr=this.props.arr;
-    var grid='<div>';
-    arr.forEach(item =>{
-      var imgsrc=item.preview ? item.preview.images[0].source.url : 'https://source.unsplash.com/weekly?water';
-      grid+=`
-        <div class="container col-sm-4 bg-light">
-          <img class="img-thumbnail" src=${imgsrc} ">
-          <h4 class="card-title">${this.cutText(item.title)}</h4>
-          <hr />
-        </div>`;
-    });
-    grid+='</div>';
-    this.refs.grid.innerHTML=grid;
-  }
-  cutText(text){
-    if(text.length>100){
-      return text.substring(0,100)+'...';
-    }
-    return text;
-  }
-  getImgSrc(item){
-
-    console.log(item);
-    return  'https://source.unsplash.com/weekly?water';
-  }
   render() {
-
+    fetch('https://www.reddit.com/r/SBU/comments/7xuyxp/how_are_nonstem_programs_at_sbu.json')
+    .then(response => response.json()).then(data => console.log(data));
     return (
+
         <bdiv className="App">
             <nav class="navbar bg-info text-white navbar-static-top">
               <a class="navbar-brand text-white" href="/">Daily Reddit</a>
             </nav>
             <div class="container">
-              <Search />
-              <div id="grid"  ref='grid' class="col-sm-12 pt-5">
-                {
-                  this.props.arr.map(item =>
-                      <div class="container col-sm-4 bg-light">
-                        <img class="img-thumbnail" src={item.preview ? item.preview.images[0].source.url.replace("&amp;","&") : 'https://source.unsplash.com/weekly?water'} />
-                        <h4 class="card-title">{this.cutText(item.title)}</h4>
-                        <hr />
-                      </div>
-                  )
-                }
-              </div>
+              <Search {...this.props}/>
+              <Grid  {...this.props}/>
+
             </div>
         </bdiv>
 
@@ -76,7 +34,8 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    arr: state.arr
+    arr: state.arr,
+    loadingStatus: state.loadingStatus
   }
 }
 
