@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Search from './components/Search';
-import Grid from './components/Grid';
+
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
@@ -10,7 +10,7 @@ const bdiv=styled.div`
 
 `;
 
-class App extends Component {
+class App extends Component{
 
   render() {
     fetch('https://www.reddit.com/r/SBU/comments/7xuyxp/how_are_nonstem_programs_at_sbu.json')
@@ -23,8 +23,8 @@ class App extends Component {
             </nav>
             <div class="container">
               <Search {...this.props}/>
-              <Grid  {...this.props}/>
 
+              {React.cloneElement(this.props.children,this.props)}
             </div>
         </bdiv>
 
