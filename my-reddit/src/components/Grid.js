@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-const Loading = require('react-loading-animation');
+import Loading from 'react-loading-animation';
+import { connect } from 'react-redux';
+import Header from './Header';
 
 class Grid extends Component {
   constructor(props) {
@@ -17,23 +19,31 @@ class Grid extends Component {
   }
   render() {
     if(this.props.loadingStatus===true){
-      return(<div class="container col-sm-12 pt-5"><Loading /></div>)
+      return(<div class="container col-sm-12 pt-5"><Header /><Loading /></div>)
     }
     return (
-      <div id="grid"  ref='grid' class="col-sm-12 pt-5">
-        {
-          this.props.arr.map(item =>
-            <Link >
-              <div class="container col-sm-4 bg-light">
-                <img class="img-thumbnail" src={item.preview ? item.preview.images[0].source.url.replace("&amp;","&") : 'https://source.unsplash.com/weekly?water'} alt="phto is not loading"/>
-                <h4 class="card-title">{this.cutText(item.title)}</h4>
-                <hr />
-              </div>
-            </Link>
-          )
-        }
+      <div>
+        <Header />
+        <div id="grid"  ref='grid' class="col-sm-12 pt-5">
+          {
+            this.props.arr.map(item =>
+                <div class="container col-sm-4 bg-light">
+                  <img class="img-thumbnail" src={item.preview ? item.preview.images[0].source.url.replace("&amp;","&") : 'https://source.unsplash.com/weekly?water'} alt="phto is not loading"/>
+                  <h4 class="card-title">{this.cutText(item.title)}</h4>
+                  <hr />
+                </div>
+            )
+          }
+        </div>
       </div>
     );
   }
 }
-export default Grid;
+function mapStateToProps(state) {
+  return {
+    arr: state.arr,
+    loadingStatus: state.loadingStatus
+  }
+}
+
+export default connect(mapStateToProps)(Grid);
