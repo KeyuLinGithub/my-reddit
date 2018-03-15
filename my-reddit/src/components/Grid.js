@@ -19,7 +19,7 @@ class Grid extends Component {
   }
   render() {
     if(this.props.loadingStatus===true){
-      return(<div class="container col-sm-12 pt-5"><Header /><Loading /></div>)
+      return(<div class="container col-sm-12 pt-5"><div class="container"><Header /></div><Loading /></div>)
     }
     return (
       <div>
@@ -27,11 +27,13 @@ class Grid extends Component {
         <div id="grid"  ref='grid' class="col-sm-12 pt-5">
           {
             this.props.arr.map(item =>
+              <Link to={'/post/'+item.id}>
                 <div class="container col-sm-4 bg-light">
                   <img class="img-thumbnail" src={item.preview ? item.preview.images[0].source.url.replace("&amp;","&") : 'https://source.unsplash.com/weekly?water'} alt="phto is not loading"/>
                   <h4 class="card-title">{this.cutText(item.title)}</h4>
                   <hr />
                 </div>
+              </Link>
             )
           }
         </div>

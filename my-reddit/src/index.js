@@ -11,7 +11,7 @@ import Grid from './components/Grid';
 
 ReactDOM.render(
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter >
       <div>
           <Route path='/'  exact={true} component={Grid} />
           <Route path='/post/:postID' component={Single} />

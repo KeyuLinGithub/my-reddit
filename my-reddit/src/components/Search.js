@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import store from './store';
-//import { Link } from 'react-router-dom';
+
 
 class Search extends Component {
   constructor(props) {
@@ -42,9 +42,9 @@ class Search extends Component {
 
   render() {
     return (
-      <div class="mb-5">
+      <div >
 
-      <form onSubmit={this.handleSubmit} class="col-sm-5">
+      <form onSubmit={this.handleSubmit}>
         <div class="form-group">
 
           <input type="text" class="form-control " id="inputItem" value={this.state.item} onChange={this.handleItemChange} placeholder="What's in your mind?" />
